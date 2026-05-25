@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cat Chaos Crash - Free Offline Cat Runner Game</title>
-    <meta name="description" content="A fun and addictive cute offline cat game. Dodge obstacles, collect fish coins, unlock 30+ cat skins! Play anytime, anywhere - no internet needed.">
+    <meta name="description" content="The addictive offline cat runner. Dodge obstacles, collect fish coins, unlock 30+ unique cat skins. No internet needed. Free on Google Play.">
     <meta property="og:title" content="Cat Chaos Crash - Free Offline Cat Runner Game">
     <meta property="og:description" content="Dodge obstacles, collect fish coins, unlock 30+ cute cat skins! Play offline anytime.">
     <meta property="og:image" content="https://leonardomagus.github.io/images/banner.png">
@@ -15,284 +15,312 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0a0a1a;
-            color: #e8e8f0;
-            min-height: 100vh;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --bg:#060611;--surface:rgba(255,255,255,0.03);--surface-hover:rgba(255,255,255,0.065);
+            --border:rgba(255,255,255,0.06);--border-hover:rgba(78,205,196,0.3);
+            --text:#e4e4ef;--text-muted:#8888a0;--text-dim:#55556a;
+            --teal:#4ECDC4;--teal-dim:rgba(78,205,196,0.12);
+            --gold:#FFD700;--orange:#FF8C00;--purple:#AB7CFF;
+            --play:https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash;
+            --radius:20px;
         }
+        body{
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;
+            -webkit-font-smoothing:antialiased;
+        }
+        a{text-decoration:none;color:inherit}
 
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
+        /* ═══ AMBIENT LIGHT ═══ */
+        .ambient{position:fixed;inset:0;pointer-events:none;z-index:0}
+        .ambient::before{
+            content:'';position:absolute;inset:0;
             background:
-                radial-gradient(ellipse at 20% 50%, rgba(78,205,196,0.07) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(255,215,0,0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 80%, rgba(156,89,182,0.04) 0%, transparent 50%);
-            z-index: 0;
-            pointer-events: none;
+                radial-gradient(ellipse 600px 600px at 15% 20%, rgba(78,205,196,0.08), transparent),
+                radial-gradient(ellipse 500px 500px at 85% 60%, rgba(171,124,255,0.06), transparent),
+                radial-gradient(ellipse 700px 400px at 50% 100%, rgba(255,140,0,0.04), transparent);
         }
-
-        .stars {
-            position: fixed; inset: 0; pointer-events: none; z-index: 0;
+        .stars,.stars-2{position:fixed;inset:0;pointer-events:none;z-index:0}
+        .stars{
             background-image:
-                radial-gradient(1.5px 1.5px at 20px 30px, rgba(255,255,255,0.8), transparent),
-                radial-gradient(1px 1px at 40px 70px, rgba(255,255,255,0.5), transparent),
-                radial-gradient(1.5px 1.5px at 90px 40px, rgba(255,255,255,0.7), transparent),
-                radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.6), transparent),
-                radial-gradient(1.5px 1.5px at 230px 80px, rgba(255,255,255,0.4), transparent),
-                radial-gradient(1px 1px at 300px 150px, rgba(255,255,255,0.7), transparent),
-                radial-gradient(1.5px 1.5px at 350px 200px, rgba(255,255,255,0.5), transparent);
-            background-size: 400px 400px;
-            animation: twinkle 6s ease-in-out infinite;
+                radial-gradient(1.2px 1.2px at 20px 30px,rgba(255,255,255,0.7),transparent),
+                radial-gradient(1px 1px at 80px 70px,rgba(255,255,255,0.4),transparent),
+                radial-gradient(1.2px 1.2px at 150px 40px,rgba(255,255,255,0.6),transparent),
+                radial-gradient(1px 1px at 220px 120px,rgba(255,255,255,0.5),transparent),
+                radial-gradient(1.2px 1.2px at 310px 80px,rgba(255,255,255,0.35),transparent),
+                radial-gradient(1px 1px at 370px 170px,rgba(255,255,255,0.55),transparent);
+            background-size:400px 400px;animation:twinkle 6s ease-in-out infinite;
         }
-        .stars-2 {
-            position: fixed; inset: 0; pointer-events: none; z-index: 0;
+        .stars-2{
             background-image:
-                radial-gradient(1px 1px at 50px 150px, rgba(255,255,255,0.6), transparent),
-                radial-gradient(1.5px 1.5px at 120px 30px, rgba(255,255,255,0.4), transparent),
-                radial-gradient(1px 1px at 200px 180px, rgba(255,255,255,0.5), transparent),
-                radial-gradient(1px 1px at 280px 60px, rgba(255,255,255,0.3), transparent),
-                radial-gradient(1.5px 1.5px at 380px 100px, rgba(255,255,255,0.5), transparent);
-            background-size: 450px 450px;
-            animation: twinkle 10s ease-in-out infinite reverse;
+                radial-gradient(1px 1px at 50px 150px,rgba(255,255,255,0.5),transparent),
+                radial-gradient(1.2px 1.2px at 130px 30px,rgba(255,255,255,0.3),transparent),
+                radial-gradient(1px 1px at 250px 190px,rgba(255,255,255,0.45),transparent),
+                radial-gradient(1px 1px at 340px 60px,rgba(255,255,255,0.25),transparent);
+            background-size:450px 450px;animation:twinkle 10s ease-in-out infinite reverse;
         }
-        @keyframes twinkle { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+        @keyframes twinkle{0%,100%{opacity:.35}50%{opacity:1}}
 
-        .container {
-            max-width: 900px; margin: 0 auto; padding: 20px;
-            position: relative; z-index: 1;
-        }
+        /* ═══ LAYOUT ═══ */
+        .wrap{max-width:920px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+        section{padding:64px 0}
 
-        .reveal {
-            opacity: 0; transform: translateY(28px);
-            transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
-        }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        .reveal-stagger > * {
-            opacity: 0; transform: translateY(20px);
-            transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1);
-        }
-        .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0.05s; }
-        .reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.1s; }
-        .reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.15s; }
-        .reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.2s; }
-        .reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.25s; }
-        .reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.3s; }
-        .reveal-stagger.visible > * { opacity: 1; transform: translateY(0); }
+        /* ═══ REVEAL ═══ */
+        .rv{opacity:0;transform:translateY(32px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+        .rv.v{opacity:1;transform:none}
+        .rvs>*{opacity:0;transform:translateY(22px);transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+        .rvs.v>*:nth-child(1){transition-delay:.04s}.rvs.v>*:nth-child(2){transition-delay:.08s}
+        .rvs.v>*:nth-child(3){transition-delay:.12s}.rvs.v>*:nth-child(4){transition-delay:.16s}
+        .rvs.v>*:nth-child(5){transition-delay:.2s}.rvs.v>*:nth-child(6){transition-delay:.24s}
+        .rvs.v>*{opacity:1;transform:none}
 
-        .divider { width: 60px; height: 3px; background: linear-gradient(90deg,#4ECDC4,#FFD700); border-radius: 2px; margin: 0 auto; }
+        .divider{width:56px;height:3px;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:2px;margin:0 auto}
+        .section-label{
+            text-transform:uppercase;font-size:.7rem;font-weight:700;letter-spacing:.14em;
+            color:var(--teal);text-align:center;margin-bottom:10px;
+        }
+        .section-title{text-align:center;font-size:1.9rem;font-weight:900;color:#fff;margin-bottom:12px;line-height:1.2}
+        .section-sub{text-align:center;color:var(--text-muted);font-size:.95rem;margin-bottom:36px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.55}
 
-        /* HERO */
-        .hero { text-align: center; padding: 36px 20px 44px; }
-        .banner-link {
-            display: block; max-width: 850px; margin: 0 auto 32px; border-radius: 20px;
-            overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        /* ═══ HERO ═══ */
+        .hero{text-align:center;padding:32px 0 56px}
+        .banner-link{
+            display:block;max-width:860px;margin:0 auto 36px;border-radius:var(--radius);overflow:hidden;
+            box-shadow:0 24px 64px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.03);
+            transition:transform .35s ease,box-shadow .35s ease;
         }
-        .banner-link:hover { transform: translateY(-4px); box-shadow: 0 28px 70px rgba(0,0,0,0.6), 0 0 40px rgba(78,205,196,0.12); }
-        .banner-link img { width: 100%; display: block; }
-        .icon-link { display: inline-block; margin-bottom: 24px; }
-        .app-icon {
-            width: 130px; height: 130px; border-radius: 28px; display: block;
-            box-shadow: 0 14px 40px rgba(0,0,0,0.4), 0 0 28px rgba(255,215,0,0.35);
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .banner-link:hover{transform:translateY(-5px);box-shadow:0 32px 80px rgba(0,0,0,.65),0 0 48px rgba(78,205,196,.1)}
+        .banner-link img{width:100%;display:block}
 
-        h1 {
-            font-size: 2.8rem; font-weight: 900; margin-bottom: 10px; line-height: 1.15;
-            background: linear-gradient(135deg, #4ECDC4, #44A08D);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        .icon-link{display:inline-block;margin-bottom:28px}
+        .app-icon{
+            width:120px;height:120px;border-radius:26px;display:block;
+            box-shadow:0 16px 44px rgba(0,0,0,.45),0 0 32px rgba(255,215,0,.3);
+            animation:float 3.5s ease-in-out infinite;
         }
-        .tagline { font-size: 1.15rem; color: #a0a0b0; margin-bottom: 6px; }
-        .subtitle { font-size: 0.95rem; color: #4ECDC4; margin-bottom: 32px; font-weight: 600; }
+        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 
-        .cta-group { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: 24px; }
-        .cta-button {
-            display: inline-flex; align-items: center; gap: 10px;
-            background: linear-gradient(135deg, #FFD700, #FFA500); color: #1a1a2e;
-            padding: 16px 42px; border-radius: 60px; font-weight: 900; font-size: 1.2rem;
-            text-decoration: none; letter-spacing: 0.02em;
-            box-shadow: 0 4px 20px rgba(255,215,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            animation: cta-glow 3s ease-in-out infinite;
+        .hero h1{
+            font-size:3rem;font-weight:900;line-height:1.1;margin-bottom:12px;
+            background:linear-gradient(135deg,#4ECDC4 0%,#7BFFF2 50%,#4ECDC4 100%);
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
         }
-        .cta-button:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 35px rgba(255,215,0,0.55), inset 0 1px 0 rgba(255,255,255,0.3); }
-        .cta-icon { font-size: 1rem; }
-        @keyframes cta-glow {
-            0%, 100% { box-shadow: 0 4px 20px rgba(255,215,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3); }
-            50% { box-shadow: 0 4px 30px rgba(255,215,0,0.6), 0 0 50px rgba(255,215,0,0.12), inset 0 1px 0 rgba(255,255,255,0.3); }
-        }
+        .hero .tagline{font-size:1.15rem;color:var(--text-muted);margin-bottom:6px;font-weight:400}
+        .hero .hook{font-size:.95rem;color:var(--teal);font-weight:600;margin-bottom:36px}
 
-        .store-badge { display: inline-block; transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 12px; overflow: hidden; }
-        .store-badge:hover { transform: scale(1.06); box-shadow: 0 12px 40px rgba(78,205,196,0.35); }
-        .store-badge img { height: 68px; display: block; }
-
-        .trust-badges { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
-        .badge {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: rgba(78,205,196,0.08); border: 1px solid rgba(78,205,196,0.2);
-            padding: 8px 18px; border-radius: 40px; font-size: 0.82rem; font-weight: 600; color: #4ECDC4;
+        /* CTA */
+        .cta-stack{display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:28px}
+        .cta{
+            display:inline-flex;align-items:center;gap:10px;
+            background:linear-gradient(135deg,var(--gold),var(--orange));color:#111;
+            padding:17px 48px;border-radius:60px;font-weight:900;font-size:1.15rem;
+            letter-spacing:.02em;
+            box-shadow:0 4px 24px rgba(255,215,0,.4),inset 0 1px 0 rgba(255,255,255,.35);
+            transition:transform .2s,box-shadow .2s;animation:glow 3s ease-in-out infinite;
         }
-        .badge-icon { font-size: 1rem; }
-
-        /* FEATURES */
-        .features-section { padding: 48px 20px; }
-        .features-section h2 { text-align: center; font-size: 1.8rem; font-weight: 800; margin-bottom: 32px; color: #fff; }
-        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .feature-card {
-            display: block; text-decoration: none; color: inherit;
-            background: rgba(255,255,255,0.035); border-radius: 20px; padding: 30px 22px;
-            text-align: center; border: 1px solid rgba(255,255,255,0.07);
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; cursor: pointer;
+        .cta:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 10px 40px rgba(255,215,0,.55),inset 0 1px 0 rgba(255,255,255,.35)}
+        @keyframes glow{
+            0%,100%{box-shadow:0 4px 24px rgba(255,215,0,.4),inset 0 1px 0 rgba(255,255,255,.35)}
+            50%{box-shadow:0 4px 36px rgba(255,215,0,.6),0 0 56px rgba(255,215,0,.12),inset 0 1px 0 rgba(255,255,255,.35)}
         }
-        .feature-card:hover { transform: translateY(-6px); border-color: rgba(78,205,196,0.25); box-shadow: 0 18px 40px rgba(0,0,0,0.3), 0 0 20px rgba(78,205,196,0.06); }
-        .feature-icon-wrap { width: 68px; height: 68px; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; }
-        .feature-icon-wrap img { max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3)); }
-        .feature-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: #4ECDC4; }
-        .feature-card p { color: #a0a0b0; line-height: 1.6; font-size: 0.9rem; }
+        .cta-sub{font-size:.75rem;color:var(--text-dim);margin-top:-4px;font-weight:500}
 
-        /* HIGHLIGHTS */
-        .highlights { padding: 40px 20px; }
-        .highlights h2 { text-align: center; font-size: 1.6rem; font-weight: 800; margin-bottom: 28px; color: #fff; }
-        .highlight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-        .highlight-item {
-            display: flex; align-items: center; gap: 12px;
-            background: rgba(255,255,255,0.03); padding: 14px 18px; border-radius: 14px;
-            border: 1px solid rgba(255,255,255,0.06); border-left: 3px solid #4ECDC4;
-            text-decoration: none; color: inherit;
-            transition: transform 0.2s ease, border-left-color 0.2s ease; cursor: pointer;
-        }
-        .highlight-item:hover { transform: translateX(4px); border-left-color: #FFD700; }
-        .hi-emoji { font-size: 1.4rem; flex-shrink: 0; }
-        .hi-text { color: #c8c8d4; font-size: 0.9rem; font-weight: 500; }
+        .store-link{display:inline-block;border-radius:12px;overflow:hidden;transition:transform .3s,box-shadow .3s}
+        .store-link:hover{transform:scale(1.05);box-shadow:0 12px 36px rgba(78,205,196,.3)}
+        .store-link img{height:64px;display:block}
 
-        /* SKINS */
-        .skins-section { padding: 48px 20px; text-align: center; }
-        .skins-section h2 {
-            font-size: 1.8rem; font-weight: 800; margin-bottom: 10px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        /* Trust strip */
+        .trust{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
+        .trust-pill{
+            display:inline-flex;align-items:center;gap:6px;
+            background:var(--teal-dim);border:1px solid rgba(78,205,196,.18);
+            padding:7px 16px;border-radius:40px;font-size:.78rem;font-weight:600;color:var(--teal);
         }
-        .skins-subtitle { color: #a0a0b0; margin-bottom: 28px; font-size: 0.95rem; }
-        .skins-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-bottom: 24px; }
-        .skin-card {
-            width: 100px; height: 100px; display: flex; align-items: center; justify-content: center;
-            background: rgba(255,255,255,0.035); border-radius: 18px; border: 2px solid rgba(255,255,255,0.1);
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer; text-decoration: none; position: relative;
-        }
-        .skin-card[data-rarity="common"]    { border-color: rgba(160,160,170,0.35); }
-        .skin-card[data-rarity="rare"]      { border-color: rgba(78,205,196,0.35); }
-        .skin-card[data-rarity="epic"]      { border-color: rgba(171,124,255,0.4); }
-        .skin-card[data-rarity="legendary"] { border-color: rgba(255,215,0,0.45); }
-        .skin-card:hover { transform: scale(1.12) rotate(3deg); }
-        .skin-card[data-rarity="common"]:hover    { border-color: #a0a0aa; box-shadow: 0 8px 24px rgba(160,160,170,0.2); }
-        .skin-card[data-rarity="rare"]:hover       { border-color: #4ECDC4; box-shadow: 0 8px 24px rgba(78,205,196,0.25); }
-        .skin-card[data-rarity="epic"]:hover       { border-color: #AB7CFF; box-shadow: 0 8px 24px rgba(171,124,255,0.25); }
-        .skin-card[data-rarity="legendary"]:hover  { border-color: #FFD700; box-shadow: 0 8px 24px rgba(255,215,0,0.3); }
-        .skin-card img { max-width: 64px; max-height: 64px; object-fit: contain; }
-        .skin-card::after {
-            content: attr(data-name); position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%);
-            font-size: 0.7rem; font-weight: 600; color: #888; white-space: nowrap;
-            opacity: 0; transition: opacity 0.2s ease; pointer-events: none;
-        }
-        .skin-card:hover::after { opacity: 1; }
+        .trust-pill .tp-icon{font-size:.95rem}
 
-        .rarity-tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
-        .rarity-tag { padding: 5px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
-        .rarity-common    { background: rgba(160,160,170,0.2); color: #b0b0ba; }
-        .rarity-rare      { background: rgba(78,205,196,0.2);  color: #4ECDC4; }
-        .rarity-epic      { background: rgba(171,124,255,0.2); color: #BB8FCE; }
-        .rarity-legendary { background: rgba(255,215,0,0.2);   color: #FFD700; }
-
-        /* FINAL CTA */
-        .final-cta {
-            text-align: center; padding: 56px 20px; margin-top: 16px;
-            border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);
-            background: linear-gradient(180deg, transparent 0%, rgba(78,205,196,0.04) 50%, transparent 100%);
+        /* ═══ STATS ═══ */
+        .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:48px 0}
+        .stat{
+            text-align:center;background:var(--surface);border:1px solid var(--border);
+            border-radius:16px;padding:28px 16px;
+            transition:transform .3s,border-color .3s;cursor:pointer;
         }
-        .final-cta h2 {
-            font-size: 2rem; font-weight: 900; margin-bottom: 10px;
-            background: linear-gradient(135deg, #4ECDC4, #FFD700);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        .stat:hover{transform:translateY(-4px);border-color:var(--border-hover)}
+        .stat-num{
+            font-size:2rem;font-weight:900;line-height:1;margin-bottom:6px;
+            background:linear-gradient(135deg,var(--teal),var(--gold));
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
         }
-        .final-cta p { color: #a0a0b0; font-size: 1.05rem; margin-bottom: 28px; }
-        .final-cta .cta-button { margin-bottom: 16px; }
+        .stat-label{font-size:.78rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.08em}
 
-        /* FOOTER */
-        footer { text-align: center; padding: 36px 20px 90px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 16px; }
-        .footer-brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: #e8e8f0; font-weight: 700; font-size: 0.95rem; margin-bottom: 14px; }
-        .footer-brand img { width: 30px; height: 30px; border-radius: 8px; }
-        .footer-links { margin: 14px 0; }
-        .footer-links a { color: #4ECDC4; text-decoration: none; margin: 0 14px; font-size: 0.88rem; transition: color 0.2s ease; }
-        .footer-links a:hover { color: #FFD700; }
-        .copyright { color: #444; font-size: 0.78rem; margin-top: 14px; }
-
-        /* STICKY CTA BAR */
-        .sticky-cta {
-            position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000;
-            background: rgba(10,10,26,0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border-top: 1px solid rgba(78,205,196,0.15); padding: 10px 16px;
-            transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+        /* ═══ FEATURES ═══ */
+        .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+        .fcard{
+            display:block;background:var(--surface);border-radius:var(--radius);padding:32px 20px;
+            text-align:center;border:1px solid var(--border);
+            transition:transform .3s,border-color .3s,box-shadow .3s,background .3s;cursor:pointer;
         }
-        .sticky-cta.show { transform: translateY(0); }
-        .sticky-inner { display: flex; align-items: center; gap: 12px; max-width: 480px; margin: 0 auto; text-decoration: none; color: #e8e8f0; }
-        .sticky-icon { width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0; }
-        .sticky-text { flex: 1; line-height: 1.3; }
-        .sticky-text strong { display: block; font-size: 0.88rem; }
-        .sticky-text span { font-size: 0.72rem; color: #a0a0b0; }
-        .sticky-btn { background: linear-gradient(135deg, #FFD700, #FFA500); color: #1a1a2e; padding: 8px 22px; border-radius: 40px; font-weight: 800; font-size: 0.82rem; white-space: nowrap; flex-shrink: 0; }
+        .fcard:hover{transform:translateY(-6px);border-color:var(--border-hover);background:var(--surface-hover);box-shadow:0 20px 48px rgba(0,0,0,.3)}
+        .fcard-icon{width:64px;height:64px;margin:0 auto 18px;display:flex;align-items:center;justify-content:center}
+        .fcard-icon img{max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 4px 14px rgba(0,0,0,.35))}
+        .fcard h3{font-size:1.05rem;font-weight:700;margin-bottom:8px;color:var(--teal)}
+        .fcard p{color:var(--text-muted);line-height:1.6;font-size:.88rem}
 
-        /* TABLET */
-        @media (max-width: 768px) {
-            h1 { font-size: 2.1rem; }
-            .features-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
-            .highlight-grid { grid-template-columns: repeat(2, 1fr); }
-            .skin-card { width: 88px; height: 88px; }
-            .skin-card img { max-width: 56px; max-height: 56px; }
-            .final-cta h2 { font-size: 1.6rem; }
+        /* ═══ PROGRESSION TEASER ═══ */
+        .progression{
+            background:linear-gradient(135deg,rgba(78,205,196,.06),rgba(171,124,255,.04));
+            border:1px solid rgba(78,205,196,.1);border-radius:var(--radius);
+            padding:40px 32px;display:flex;gap:32px;align-items:center;
+            cursor:pointer;transition:transform .3s,box-shadow .3s;
+        }
+        .progression:hover{transform:translateY(-4px);box-shadow:0 20px 48px rgba(0,0,0,.3)}
+        .prog-left{flex:1}
+        .prog-left h3{font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:8px}
+        .prog-left p{color:var(--text-muted);font-size:.9rem;line-height:1.6}
+        .prog-right{display:flex;gap:8px;flex-shrink:0}
+        .prog-step{
+            width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+            font-size:1.4rem;border:2px solid var(--border);background:var(--surface);
+        }
+        .prog-step.active{border-color:var(--gold);background:rgba(255,215,0,.1)}
+
+        /* ═══ HIGHLIGHTS ═══ */
+        .hl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+        .hl{
+            display:flex;align-items:center;gap:14px;
+            background:var(--surface);padding:16px 20px;border-radius:14px;
+            border:1px solid var(--border);border-left:3px solid var(--teal);
+            transition:transform .2s,border-left-color .2s;cursor:pointer;
+        }
+        .hl:hover{transform:translateX(5px);border-left-color:var(--gold)}
+        .hl-emoji{font-size:1.35rem;flex-shrink:0}
+        .hl-wrap{flex:1}
+        .hl-title{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:2px}
+        .hl-desc{font-size:.76rem;color:var(--text-muted);line-height:1.4}
+
+        /* ═══ SKINS ═══ */
+        .skins-grid{display:flex;justify-content:center;flex-wrap:wrap;gap:14px;margin-bottom:20px}
+        .skin{
+            width:104px;height:104px;display:flex;align-items:center;justify-content:center;
+            background:var(--surface);border-radius:18px;border:2px solid var(--border);
+            transition:transform .3s,border-color .3s,box-shadow .3s;cursor:pointer;position:relative;
+        }
+        .skin[data-r="c"]{border-color:rgba(160,160,170,.3)}
+        .skin[data-r="r"]{border-color:rgba(78,205,196,.3)}
+        .skin[data-r="e"]{border-color:rgba(171,124,255,.35)}
+        .skin[data-r="l"]{border-color:rgba(255,215,0,.4)}
+        .skin:hover{transform:scale(1.14) rotate(3deg)}
+        .skin[data-r="c"]:hover{border-color:#a0a0aa;box-shadow:0 8px 24px rgba(160,160,170,.2)}
+        .skin[data-r="r"]:hover{border-color:var(--teal);box-shadow:0 8px 24px rgba(78,205,196,.25)}
+        .skin[data-r="e"]:hover{border-color:var(--purple);box-shadow:0 8px 24px rgba(171,124,255,.25)}
+        .skin[data-r="l"]:hover{border-color:var(--gold);box-shadow:0 8px 28px rgba(255,215,0,.3)}
+        .skin img{max-width:66px;max-height:66px;object-fit:contain}
+        .skin::after{
+            content:attr(data-name);position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);
+            font-size:.68rem;font-weight:600;color:var(--text-dim);white-space:nowrap;
+            opacity:0;transition:opacity .2s;pointer-events:none;
+        }
+        .skin:hover::after{opacity:1}
+
+        .rarity-row{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:10px}
+        .rtag{padding:5px 16px;border-radius:20px;font-size:.76rem;font-weight:700}
+        .rtag-c{background:rgba(160,160,170,.15);color:#aaa}
+        .rtag-r{background:rgba(78,205,196,.15);color:var(--teal)}
+        .rtag-e{background:rgba(171,124,255,.15);color:#BB8FCE}
+        .rtag-l{background:rgba(255,215,0,.15);color:var(--gold)}
+
+        .skins-tease{
+            margin-top:24px;font-size:.85rem;color:var(--text-dim);font-weight:600;
+            font-style:italic;
         }
 
-        /* MOBILE */
-        @media (max-width: 480px) {
-            h1 { font-size: 1.7rem; }
-            .tagline { font-size: 0.95rem; }
-            .app-icon { width: 100px; height: 100px; border-radius: 22px; }
-            .cta-button { padding: 14px 32px; font-size: 1.05rem; }
-            .store-badge img { height: 56px; }
-            .highlight-grid { grid-template-columns: 1fr; }
-            .trust-badges { gap: 8px; }
-            .badge { font-size: 0.76rem; padding: 6px 14px; }
-            .skin-card { width: 72px; height: 72px; }
-            .skin-card img { max-width: 48px; max-height: 48px; }
-            .skin-card::after { display: none; }
-            .banner-link { border-radius: 14px; }
-            .sticky-inner { gap: 10px; }
-            .sticky-icon { width: 34px; height: 34px; }
-            .sticky-text strong { font-size: 0.8rem; }
-            .sticky-btn { padding: 7px 18px; font-size: 0.78rem; }
-            footer { padding-bottom: 80px; }
+        /* ═══ FINAL CTA ═══ */
+        .final-cta{
+            text-align:center;padding:64px 20px;margin-top:8px;
+            border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+            background:linear-gradient(180deg,transparent,rgba(78,205,196,.035),transparent);
+        }
+        .final-cta h2{
+            font-size:2.2rem;font-weight:900;margin-bottom:10px;
+            background:linear-gradient(135deg,var(--teal),var(--gold));
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+        }
+        .final-cta p{color:var(--text-muted);font-size:1.05rem;margin-bottom:32px;max-width:400px;margin-left:auto;margin-right:auto}
+        .final-cta .cta{margin-bottom:16px}
+
+        /* ═══ FOOTER ═══ */
+        footer{text-align:center;padding:36px 20px 96px;border-top:1px solid var(--border);margin-top:8px}
+        .f-brand{display:inline-flex;align-items:center;gap:10px;color:var(--text);font-weight:700;font-size:.92rem;margin-bottom:14px}
+        .f-brand img{width:28px;height:28px;border-radius:7px}
+        .f-links{margin:14px 0}
+        .f-links a{color:var(--teal);margin:0 14px;font-size:.85rem;transition:color .2s}
+        .f-links a:hover{color:var(--gold)}
+        .f-copy{color:var(--text-dim);font-size:.74rem;margin-top:12px}
+
+        /* ═══ STICKY BAR ═══ */
+        .sticky{
+            position:fixed;bottom:0;left:0;right:0;z-index:1000;
+            background:rgba(6,6,17,.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+            border-top:1px solid rgba(78,205,196,.12);padding:10px 16px;
+            transform:translateY(100%);transition:transform .4s cubic-bezier(.16,1,.3,1);
+        }
+        .sticky.show{transform:translateY(0)}
+        .sticky-in{display:flex;align-items:center;gap:12px;max-width:480px;margin:0 auto;color:var(--text)}
+        .sticky-ic{width:40px;height:40px;border-radius:10px;flex-shrink:0}
+        .sticky-tx{flex:1;line-height:1.3}
+        .sticky-tx strong{display:block;font-size:.86rem}
+        .sticky-tx span{font-size:.7rem;color:var(--text-muted)}
+        .sticky-bt{
+            background:linear-gradient(135deg,var(--gold),var(--orange));color:#111;
+            padding:9px 24px;border-radius:40px;font-weight:800;font-size:.82rem;white-space:nowrap;flex-shrink:0;
+        }
+
+        /* ═══ TABLET ═══ */
+        @media(max-width:768px){
+            .hero h1{font-size:2.2rem}
+            .features-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto}
+            .hl-grid{grid-template-columns:1fr}
+            .stats{grid-template-columns:repeat(3,1fr);gap:10px}
+            .stat{padding:22px 10px}.stat-num{font-size:1.6rem}
+            .progression{flex-direction:column;text-align:center;gap:20px}
+            .prog-right{justify-content:center}
+            .skin{width:88px;height:88px}.skin img{max-width:56px;max-height:56px}
+            .final-cta h2{font-size:1.7rem}
+        }
+
+        /* ═══ MOBILE ═══ */
+        @media(max-width:480px){
+            section{padding:44px 0}
+            .hero h1{font-size:1.75rem}
+            .hero .tagline{font-size:.95rem}
+            .app-icon{width:96px;height:96px;border-radius:22px}
+            .cta{padding:15px 34px;font-size:1.05rem}
+            .store-link img{height:54px}
+            .trust{gap:8px}.trust-pill{font-size:.72rem;padding:6px 12px}
+            .stats{grid-template-columns:repeat(3,1fr);gap:8px}
+            .stat{padding:18px 8px;border-radius:12px}.stat-num{font-size:1.3rem}.stat-label{font-size:.68rem}
+            .skin{width:70px;height:70px;border-radius:14px}.skin img{max-width:46px;max-height:46px}
+            .skin::after{display:none}
+            .banner-link{border-radius:14px}
+            .prog-step{width:42px;height:42px;font-size:1.1rem;border-radius:10px}
+            .sticky-in{gap:10px}.sticky-ic{width:34px;height:34px}
+            .sticky-tx strong{font-size:.8rem}.sticky-bt{padding:8px 18px;font-size:.78rem}
+            footer{padding-bottom:82px}
         }
     </style>
 </head>
 <body>
+    <div class="ambient"></div>
     <div class="stars"></div>
     <div class="stars-2"></div>
 
-    <div class="container">
+    <div class="wrap">
 
-        <!-- HERO -->
+        <!-- ══ HERO ══ -->
         <section class="hero">
             <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="banner-link">
-                <img src="images/banner.png" alt="Cat Chaos Crash Banner">
+                <img src="images/banner.png" alt="Cat Chaos Crash">
             </a>
 
             <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="icon-link">
@@ -300,174 +328,202 @@
             </a>
 
             <h1>Cat Chaos Crash</h1>
-            <p class="tagline">The Addictive Offline Cat Runner</p>
-            <p class="subtitle">Swipe, dodge, and survive as long as you can</p>
+            <p class="tagline">One tap. Infinite chaos. Can you survive?</p>
+            <p class="hook">The offline cat runner you won't put down</p>
 
-            <div class="cta-group">
-                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="cta-button">
-                    <span class="cta-icon">&#9658;</span>
-                    Download Free
+            <div class="cta-stack">
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="cta">
+                    &#9658;&ensp;Play Now - It's Free
                 </a>
-                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="store-badge">
+                <span class="cta-sub">No signup &bull; No internet needed &bull; No paywall</span>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="store-link">
                     <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
                 </a>
             </div>
 
-            <div class="trust-badges">
-                <span class="badge"><span class="badge-icon">&#9992;</span> Offline Play</span>
-                <span class="badge"><span class="badge-icon">&#11088;</span> 30+ Skins</span>
-                <span class="badge"><span class="badge-icon">&#127942;</span> Leaderboards</span>
+            <div class="trust">
+                <span class="trust-pill"><span class="tp-icon">&#128268;</span> Works Offline</span>
+                <span class="trust-pill"><span class="tp-icon">&#11088;</span> 30+ Skins</span>
+                <span class="trust-pill"><span class="tp-icon">&#127942;</span> Leaderboards</span>
+                <span class="trust-pill"><span class="tp-icon">&#9889;</span> Instant Start</span>
             </div>
         </section>
 
+        <!-- ══ STATS ══ -->
+        <div class="stats rv rvs">
+            <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="stat">
+                <div class="stat-num">30+</div>
+                <div class="stat-label">Unique Skins</div>
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="stat">
+                <div class="stat-num">4</div>
+                <div class="stat-label">Rarity Tiers</div>
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="stat">
+                <div class="stat-num">12</div>
+                <div class="stat-label">Weekly Challenges</div>
+            </a>
+        </div>
+
         <div class="divider"></div>
 
-        <!-- FEATURES -->
-        <section class="features-section reveal">
-            <h2>What Makes It Fun</h2>
-            <div class="features-grid reveal-stagger">
-                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="feature-card">
-                    <div class="feature-icon-wrap">
-                        <img src="images/cat.png" alt="Cat" loading="lazy">
-                    </div>
-                    <h3>Easy to Play</h3>
-                    <p>Simple one-finger controls. Swipe left and right to dodge obstacles!</p>
+        <!-- ══ FEATURES ══ -->
+        <section class="rv">
+            <p class="section-label">Gameplay</p>
+            <h2 class="section-title">Simple to Learn. Impossible to Master.</h2>
+            <p class="section-sub">One finger is all you need. Swipe through neon obstacles, grab every fish coin, and push your highscore further than you thought possible.</p>
+            <div class="features-grid rvs">
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="fcard">
+                    <div class="fcard-icon"><img src="images/cat.png" alt="Cat" loading="lazy"></div>
+                    <h3>One-Finger Controls</h3>
+                    <p>Swipe left and right. That's it. The rest is pure reflex and nerve.</p>
                 </a>
-                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="feature-card">
-                    <div class="feature-icon-wrap">
-                        <img src="images/fish.png" alt="Fish Coin" loading="lazy">
-                    </div>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="fcard">
+                    <div class="fcard-icon"><img src="images/fish.png" alt="Fish" loading="lazy"></div>
                     <h3>Collect Fish Coins</h3>
-                    <p>Grab shiny fish coins and unlock awesome cat skins!</p>
+                    <p>Every coin counts. Save up for rare skins or risk it all going for one more.</p>
                 </a>
-                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="feature-card">
-                    <div class="feature-icon-wrap">
-                        <img src="images/golden_cat.png" alt="Skins" loading="lazy">
-                    </div>
-                    <h3>30+ Unique Skins</h3>
-                    <p>From pirates to wizards - discover the Diamond Cat and mythical Lotus Cat!</p>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="fcard">
+                    <div class="fcard-icon"><img src="images/golden_cat.png" alt="Skins" loading="lazy"></div>
+                    <h3>Unlock Rare Skins</h3>
+                    <p>From Common to Legendary. Can you earn enough to unlock the mythical Lotus Cat?</p>
                 </a>
             </div>
         </section>
 
-        <!-- HIGHLIGHTS -->
-        <section class="highlights reveal">
-            <h2>Why You'll Love It</h2>
-            <div class="highlight-grid reveal-stagger">
-                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="highlight-item">
-                    <span class="hi-emoji">&#127873;</span>
-                    <span class="hi-text">Daily login bonuses</span>
+        <!-- ══ PROGRESSION TEASER ══ -->
+        <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="progression rv">
+            <div class="prog-left">
+                <h3>Your Daily Rewards Are Waiting</h3>
+                <p>Log in every day for escalating bonuses. Spin the Lucky Wheel. Complete weekly challenges. The longer your streak, the bigger your reward.</p>
+            </div>
+            <div class="prog-right">
+                <div class="prog-step active">&#127873;</div>
+                <div class="prog-step active">&#127922;</div>
+                <div class="prog-step active">&#127942;</div>
+                <div class="prog-step">&#128142;</div>
+            </div>
+        </a>
+
+        <div class="divider" style="margin-top:48px;margin-bottom:0"></div>
+
+        <!-- ══ HIGHLIGHTS ══ -->
+        <section class="rv">
+            <p class="section-label">Features</p>
+            <h2 class="section-title">Packed With Content</h2>
+            <p class="section-sub">More than just a runner. Cat Chaos Crash rewards you every time you play.</p>
+            <div class="hl-grid rvs">
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="hl">
+                    <span class="hl-emoji">&#127873;</span>
+                    <div class="hl-wrap"><div class="hl-title">Daily Login Bonus</div><div class="hl-desc">7-day streak cycle with escalating coin rewards</div></div>
                 </a>
-                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="highlight-item">
-                    <span class="hi-emoji">&#127922;</span>
-                    <span class="hi-text">Lucky wheel spins</span>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="hl">
+                    <span class="hl-emoji">&#127922;</span>
+                    <div class="hl-wrap"><div class="hl-title">Lucky Wheel</div><div class="hl-desc">Free daily spin with coin prizes</div></div>
                 </a>
-                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="highlight-item">
-                    <span class="hi-emoji">&#127942;</span>
-                    <span class="hi-text">Weekly challenges</span>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="hl">
+                    <span class="hl-emoji">&#127942;</span>
+                    <div class="hl-wrap"><div class="hl-title">Weekly Challenges</div><div class="hl-desc">12 rotating challenges to test your skills</div></div>
                 </a>
-                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="highlight-item">
-                    <span class="hi-emoji">&#9729;&#65039;</span>
-                    <span class="hi-text">Cloud save backup</span>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="hl">
+                    <span class="hl-emoji">&#9729;&#65039;</span>
+                    <div class="hl-wrap"><div class="hl-title">Cloud Save</div><div class="hl-desc">Your progress synced via Google Play Games</div></div>
                 </a>
-                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="highlight-item">
-                    <span class="hi-emoji">&#127941;</span>
-                    <span class="hi-text">Global leaderboards</span>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="hl">
+                    <span class="hl-emoji">&#127941;</span>
+                    <div class="hl-wrap"><div class="hl-title">Global Leaderboards</div><div class="hl-desc">Compete for the highest run and total coins</div></div>
                 </a>
-                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="highlight-item">
-                    <span class="hi-emoji">&#128106;</span>
-                    <span class="hi-text">Fun for all ages</span>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="hl">
+                    <span class="hl-emoji">&#9889;</span>
+                    <div class="hl-wrap"><div class="hl-title">Slowmo Power-Up</div><div class="hl-desc">Grab it at the right moment to survive the impossible</div></div>
                 </a>
             </div>
         </section>
 
         <div class="divider"></div>
 
-        <!-- SKINS -->
-        <section class="skins-section reveal">
-            <h2>Unlock Awesome Skins</h2>
-            <p class="skins-subtitle">Each cat has its own style and personality!</p>
-            <div class="skins-grid reveal-stagger">
-                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="skin-card" data-rarity="epic" data-name="Wizard Cat">
+        <!-- ══ SKINS ══ -->
+        <section class="rv">
+            <p class="section-label">Collection</p>
+            <h2 class="section-title" style="background:linear-gradient(135deg,var(--gold),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Collect Them All</h2>
+            <p class="section-sub">Over 30 hand-crafted skins across 4 rarity tiers. Which one will be your favorite?</p>
+            <div class="skins-grid rvs">
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="skin" data-r="e" data-name="Wizard Cat">
                     <img src="images/wizard_cat.png" alt="Wizard Cat" loading="lazy">
                 </a>
-                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="skin-card" data-rarity="legendary" data-name="Cosmos Cat">
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="skin" data-r="l" data-name="Cosmos Cat">
                     <img src="images/cosmos_cat.png" alt="Cosmos Cat" loading="lazy">
                 </a>
-                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="skin-card" data-rarity="rare" data-name="Pirate Cat">
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="skin" data-r="r" data-name="Pirate Cat">
                     <img src="images/pirate_cat.png" alt="Pirate Cat" loading="lazy">
                 </a>
-                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="skin-card" data-rarity="epic" data-name="Robo Cat">
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="skin" data-r="e" data-name="Robo Cat">
                     <img src="images/robo_cat.png" alt="Robo Cat" loading="lazy">
                 </a>
-                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="skin-card" data-rarity="epic" data-name="Ghost Cat">
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="skin" data-r="e" data-name="Ghost Cat">
                     <img src="images/ghost_cat.png" alt="Ghost Cat" loading="lazy">
                 </a>
-                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="skin-card" data-rarity="epic" data-name="Golden Cat">
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="skin" data-r="e" data-name="Golden Cat">
                     <img src="images/golden_cat.png" alt="Golden Cat" loading="lazy">
                 </a>
             </div>
-            <div class="rarity-tags">
-                <span class="rarity-tag rarity-common">Common</span>
-                <span class="rarity-tag rarity-rare">Rare</span>
-                <span class="rarity-tag rarity-epic">Epic</span>
-                <span class="rarity-tag rarity-legendary">Legendary</span>
+            <div class="rarity-row">
+                <span class="rtag rtag-c">Common</span>
+                <span class="rtag rtag-r">Rare</span>
+                <span class="rtag rtag-e">Epic</span>
+                <span class="rtag rtag-l">Legendary</span>
             </div>
+            <p class="skins-tease">...and 25+ more waiting in the shop</p>
         </section>
 
-        <!-- FINAL CTA -->
-        <section class="final-cta reveal">
-            <h2>Ready to Play?</h2>
-            <p>Join thousands of players. Free, offline, and endlessly fun.</p>
-            <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="cta-button">
-                <span class="cta-icon">&#9658;</span>
-                Get It Now - It's Free
+        <!-- ══ FINAL CTA ══ -->
+        <section class="final-cta rv">
+            <h2>Your Highscore Is 0. Fix That.</h2>
+            <p>No internet needed. No paywall. Just pure chaos.</p>
+            <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="cta">
+                &#9658;&ensp;Download Free
             </a>
             <br>
-            <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="store-badge" style="margin-top:8px;">
+            <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="store-link" style="margin-top:10px">
                 <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
             </a>
         </section>
 
-        <!-- FOOTER -->
+        <!-- ══ FOOTER ══ -->
         <footer>
-            <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="footer-brand">
-                <img src="images/Icon%203.png" alt="Cat Chaos Crash">
+            <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="f-brand">
+                <img src="images/Icon%203.png" alt="">
                 <span>Cat Chaos Crash</span>
             </a>
-            <nav class="footer-links">
+            <nav class="f-links">
                 <a href="privacy-policy.html">Privacy Policy</a>
                 <a href="data-deletion.html">Data Deletion</a>
                 <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash">Google Play</a>
             </nav>
-            <p class="copyright">&copy; 2026 Leonardo Magus. All rights reserved.</p>
+            <p class="f-copy">&copy; 2026 Leonardo Magus. All rights reserved.</p>
         </footer>
 
     </div>
 
-    <!-- STICKY CTA BAR -->
-    <div class="sticky-cta" id="stickyCta">
-        <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="sticky-inner">
-            <img src="images/Icon%203.png" alt="" class="sticky-icon">
-            <div class="sticky-text">
+    <!-- STICKY BAR -->
+    <div class="sticky" id="stickyBar">
+        <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="sticky-in">
+            <img src="images/Icon%203.png" alt="" class="sticky-ic">
+            <div class="sticky-tx">
                 <strong>Cat Chaos Crash</strong>
                 <span>Free on Google Play</span>
             </div>
-            <span class="sticky-btn">Install</span>
+            <span class="sticky-bt">Install</span>
         </a>
     </div>
 
     <script>
-        var ro = new IntersectionObserver(function(e) {
-            e.forEach(function(x) { if (x.isIntersecting) { x.target.classList.add('visible'); ro.unobserve(x.target); } });
-        }, { threshold: 0.12 });
-        document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el) { ro.observe(el); });
-
-        var sc = document.getElementById('stickyCta');
-        var hr = document.querySelector('.hero');
-        new IntersectionObserver(function(e) {
-            sc.classList.toggle('show', !e[0].isIntersecting);
-        }, { threshold: 0 }).observe(hr);
+    (function(){
+        var ro=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('v');ro.unobserve(x.target)}})},{threshold:.1});
+        document.querySelectorAll('.rv,.rvs').forEach(function(el){ro.observe(el)});
+        var sb=document.getElementById('stickyBar'),hr=document.querySelector('.hero');
+        new IntersectionObserver(function(e){sb.classList.toggle('show',!e[0].isIntersecting)},{threshold:0}).observe(hr);
+    })();
     </script>
 </body>
 </html>
