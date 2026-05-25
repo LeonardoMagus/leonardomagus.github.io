@@ -11,492 +11,401 @@
     <meta property="og:url" content="https://leonardomagus.github.io">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" type="image/png" href="images/app_icon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            color: #fff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a1a;
+            color: #e8e8f0;
             min-height: 100vh;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(78,205,196,0.07) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(255,215,0,0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(156,89,182,0.04) 0%, transparent 50%);
+            z-index: 0;
+            pointer-events: none;
         }
 
         .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
+            position: fixed; inset: 0; pointer-events: none; z-index: 0;
             background-image:
-                radial-gradient(2px 2px at 20px 30px, #fff, transparent),
-                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
-                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
-                radial-gradient(2px 2px at 160px 120px, rgba(255,255,255,0.9), transparent),
-                radial-gradient(1px 1px at 230px 80px, #fff, transparent),
-                radial-gradient(2px 2px at 300px 150px, rgba(255,255,255,0.7), transparent),
-                radial-gradient(1px 1px at 350px 200px, #fff, transparent);
+                radial-gradient(1.5px 1.5px at 20px 30px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 40px 70px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1.5px 1.5px at 90px 40px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1.5px 1.5px at 230px 80px, rgba(255,255,255,0.4), transparent),
+                radial-gradient(1px 1px at 300px 150px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1.5px 1.5px at 350px 200px, rgba(255,255,255,0.5), transparent);
             background-size: 400px 400px;
-            animation: twinkle 8s ease-in-out infinite;
+            animation: twinkle 6s ease-in-out infinite;
         }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
+        .stars-2 {
+            position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            background-image:
+                radial-gradient(1px 1px at 50px 150px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1.5px 1.5px at 120px 30px, rgba(255,255,255,0.4), transparent),
+                radial-gradient(1px 1px at 200px 180px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 280px 60px, rgba(255,255,255,0.3), transparent),
+                radial-gradient(1.5px 1.5px at 380px 100px, rgba(255,255,255,0.5), transparent);
+            background-size: 450px 450px;
+            animation: twinkle 10s ease-in-out infinite reverse;
         }
+        @keyframes twinkle { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 
         .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 1;
+            max-width: 900px; margin: 0 auto; padding: 20px;
+            position: relative; z-index: 1;
         }
 
-        .banner-section {
-            text-align: center;
-            padding: 40px 20px 20px 20px;
+        .reveal {
+            opacity: 0; transform: translateY(28px);
+            transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
         }
-
-        .banner {
-            width: 100%;
-            max-width: 800px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(78, 205, 196, 0.2);
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-stagger > * {
+            opacity: 0; transform: translateY(20px);
+            transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1);
         }
+        .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0.05s; }
+        .reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.1s; }
+        .reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.15s; }
+        .reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.2s; }
+        .reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.25s; }
+        .reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.3s; }
+        .reveal-stagger.visible > * { opacity: 1; transform: translateY(0); }
 
-        .hero {
-            text-align: center;
-            padding: 30px 20px 40px 20px;
+        .divider { width: 60px; height: 3px; background: linear-gradient(90deg,#4ECDC4,#FFD700); border-radius: 2px; margin: 0 auto; }
+
+        /* HERO */
+        .hero { text-align: center; padding: 36px 20px 44px; }
+        .banner-link {
+            display: block; max-width: 850px; margin: 0 auto 32px; border-radius: 20px;
+            overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
+        .banner-link:hover { transform: translateY(-4px); box-shadow: 0 28px 70px rgba(0,0,0,0.6), 0 0 40px rgba(78,205,196,0.12); }
+        .banner-link img { width: 100%; display: block; }
+        .icon-link { display: inline-block; margin-bottom: 24px; }
         .app-icon {
-            width: 140px;
-            height: 140px;
-            border-radius: 28px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 215, 0, 0.4);
+            width: 130px; height: 130px; border-radius: 28px; display: block;
+            box-shadow: 0 14px 40px rgba(0,0,0,0.4), 0 0 28px rgba(255,215,0,0.35);
             animation: float 3s ease-in-out infinite;
-            margin-bottom: 25px;
         }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
         h1 {
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin-bottom: 10px;
+            font-size: 2.8rem; font-weight: 900; margin-bottom: 10px; line-height: 1.15;
             background: linear-gradient(135deg, #4ECDC4, #44A08D);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .tagline { font-size: 1.15rem; color: #a0a0b0; margin-bottom: 6px; }
+        .subtitle { font-size: 0.95rem; color: #4ECDC4; margin-bottom: 32px; font-weight: 600; }
+
+        .cta-group { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: 24px; }
+        .cta-button {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: linear-gradient(135deg, #FFD700, #FFA500); color: #1a1a2e;
+            padding: 16px 42px; border-radius: 60px; font-weight: 900; font-size: 1.2rem;
+            text-decoration: none; letter-spacing: 0.02em;
+            box-shadow: 0 4px 20px rgba(255,215,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            animation: cta-glow 3s ease-in-out infinite;
+        }
+        .cta-button:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 35px rgba(255,215,0,0.55), inset 0 1px 0 rgba(255,255,255,0.3); }
+        .cta-icon { font-size: 1rem; }
+        @keyframes cta-glow {
+            0%, 100% { box-shadow: 0 4px 20px rgba(255,215,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3); }
+            50% { box-shadow: 0 4px 30px rgba(255,215,0,0.6), 0 0 50px rgba(255,215,0,0.12), inset 0 1px 0 rgba(255,255,255,0.3); }
         }
 
-        .tagline {
-            font-size: 1.2rem;
-            color: #a0a0a0;
-            margin-bottom: 8px;
-        }
+        .store-badge { display: inline-block; transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 12px; overflow: hidden; }
+        .store-badge:hover { transform: scale(1.06); box-shadow: 0 12px 40px rgba(78,205,196,0.35); }
+        .store-badge img { height: 68px; display: block; }
 
-        .subtitle {
-            font-size: 1rem;
-            color: #4ECDC4;
-            margin-bottom: 30px;
-            font-weight: 700;
+        .trust-badges { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+        .badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(78,205,196,0.08); border: 1px solid rgba(78,205,196,0.2);
+            padding: 8px 18px; border-radius: 40px; font-size: 0.82rem; font-weight: 600; color: #4ECDC4;
         }
+        .badge-icon { font-size: 1rem; }
 
-        /* Download Button Section */
-        .download-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
+        /* FEATURES */
+        .features-section { padding: 48px 20px; }
+        .features-section h2 { text-align: center; font-size: 1.8rem; font-weight: 800; margin-bottom: 32px; color: #fff; }
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .feature-card {
+            display: block; text-decoration: none; color: inherit;
+            background: rgba(255,255,255,0.035); border-radius: 20px; padding: 30px 22px;
+            text-align: center; border: 1px solid rgba(255,255,255,0.07);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; cursor: pointer;
         }
+        .feature-card:hover { transform: translateY(-6px); border-color: rgba(78,205,196,0.25); box-shadow: 0 18px 40px rgba(0,0,0,0.3), 0 0 20px rgba(78,205,196,0.06); }
+        .feature-icon-wrap { width: 68px; height: 68px; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; }
+        .feature-icon-wrap img { max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3)); }
+        .feature-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: #4ECDC4; }
+        .feature-card p { color: #a0a0b0; line-height: 1.6; font-size: 0.9rem; }
 
-        .download-hint {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: #1a1a2e;
-            padding: 10px 25px;
-            border-radius: 50px;
-            font-weight: 900;
-            font-size: 1.1rem;
-            animation: pulse 2s ease-in-out infinite;
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
-        }
-
-        .download-hint .arrow {
-            font-size: 1.4rem;
-            animation: bounce 1s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4); }
-            50% { transform: scale(1.05); box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6); }
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(5px); }
-        }
-
-        .store-button {
-            display: inline-block;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .store-button:hover {
-            transform: scale(1.08);
-            box-shadow: 0 15px 50px rgba(78, 205, 196, 0.5);
-        }
-
-        .store-button img {
-            height: 75px;
-            display: block;
-        }
-
-        /* Offline Badge */
-        .offline-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(78, 205, 196, 0.2);
-            border: 2px solid #4ECDC4;
-            padding: 12px 24px;
-            border-radius: 50px;
-            margin-top: 20px;
-            font-weight: 700;
-            color: #4ECDC4;
-        }
-
-        .offline-badge .icon {
-            font-size: 1.3rem;
-        }
-
-        /* Features Grid */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            padding: 40px 20px;
-        }
-
-        .feature {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 25px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease, background 0.3s ease;
-        }
-
-        .feature:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .feature-icon-wrapper {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 15px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .feature-icon {
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
-        }
-
-        .feature h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            color: #4ECDC4;
-        }
-
-        .feature p {
-            color: #a0a0a0;
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-
-        /* Highlights Section */
-        .highlights {
-            padding: 30px 20px;
-        }
-
-        .highlights h2 {
-            text-align: center;
-            font-size: 1.6rem;
-            margin-bottom: 25px;
-            color: #fff;
-        }
-
-        .highlight-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
+        /* HIGHLIGHTS */
+        .highlights { padding: 40px 20px; }
+        .highlights h2 { text-align: center; font-size: 1.6rem; font-weight: 800; margin-bottom: 28px; color: #fff; }
+        .highlight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
         .highlight-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px 20px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex; align-items: center; gap: 12px;
+            background: rgba(255,255,255,0.03); padding: 14px 18px; border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.06); border-left: 3px solid #4ECDC4;
+            text-decoration: none; color: inherit;
+            transition: transform 0.2s ease, border-left-color 0.2s ease; cursor: pointer;
         }
+        .highlight-item:hover { transform: translateX(4px); border-left-color: #FFD700; }
+        .hi-emoji { font-size: 1.4rem; flex-shrink: 0; }
+        .hi-text { color: #c8c8d4; font-size: 0.9rem; font-weight: 500; }
 
-        .highlight-item .emoji {
-            font-size: 1.5rem;
-        }
-
-        .highlight-item span {
-            color: #d0d0d0;
-            font-size: 0.95rem;
-        }
-
-        /* Skins Section */
-        .skins-section {
-            padding: 50px 20px;
-            text-align: center;
-        }
-
+        /* SKINS */
+        .skins-section { padding: 48px 20px; text-align: center; }
         .skins-section h2 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: #FFD700;
+            font-size: 1.8rem; font-weight: 800; margin-bottom: 10px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
-
-        .skins-subtitle {
-            color: #a0a0a0;
-            margin-bottom: 30px;
-            font-size: 1rem;
-        }
-
-        .skins-grid {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
+        .skins-subtitle { color: #a0a0b0; margin-bottom: 28px; font-size: 0.95rem; }
+        .skins-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-bottom: 24px; }
         .skin-card {
-            width: 90px;
-            height: 90px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            transition: all 0.3s ease;
+            width: 100px; height: 100px; display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.035); border-radius: 18px; border: 2px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer; text-decoration: none; position: relative;
+        }
+        .skin-card[data-rarity="common"]    { border-color: rgba(160,160,170,0.35); }
+        .skin-card[data-rarity="rare"]      { border-color: rgba(78,205,196,0.35); }
+        .skin-card[data-rarity="epic"]      { border-color: rgba(171,124,255,0.4); }
+        .skin-card[data-rarity="legendary"] { border-color: rgba(255,215,0,0.45); }
+        .skin-card:hover { transform: scale(1.12) rotate(3deg); }
+        .skin-card[data-rarity="common"]:hover    { border-color: #a0a0aa; box-shadow: 0 8px 24px rgba(160,160,170,0.2); }
+        .skin-card[data-rarity="rare"]:hover       { border-color: #4ECDC4; box-shadow: 0 8px 24px rgba(78,205,196,0.25); }
+        .skin-card[data-rarity="epic"]:hover       { border-color: #AB7CFF; box-shadow: 0 8px 24px rgba(171,124,255,0.25); }
+        .skin-card[data-rarity="legendary"]:hover  { border-color: #FFD700; box-shadow: 0 8px 24px rgba(255,215,0,0.3); }
+        .skin-card img { max-width: 64px; max-height: 64px; object-fit: contain; }
+        .skin-card::after {
+            content: attr(data-name); position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%);
+            font-size: 0.7rem; font-weight: 600; color: #888; white-space: nowrap;
+            opacity: 0; transition: opacity 0.2s ease; pointer-events: none;
+        }
+        .skin-card:hover::after { opacity: 1; }
+
+        .rarity-tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+        .rarity-tag { padding: 5px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+        .rarity-common    { background: rgba(160,160,170,0.2); color: #b0b0ba; }
+        .rarity-rare      { background: rgba(78,205,196,0.2);  color: #4ECDC4; }
+        .rarity-epic      { background: rgba(171,124,255,0.2); color: #BB8FCE; }
+        .rarity-legendary { background: rgba(255,215,0,0.2);   color: #FFD700; }
+
+        /* FINAL CTA */
+        .final-cta {
+            text-align: center; padding: 56px 20px; margin-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: linear-gradient(180deg, transparent 0%, rgba(78,205,196,0.04) 50%, transparent 100%);
+        }
+        .final-cta h2 {
+            font-size: 2rem; font-weight: 900; margin-bottom: 10px;
+            background: linear-gradient(135deg, #4ECDC4, #FFD700);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .final-cta p { color: #a0a0b0; font-size: 1.05rem; margin-bottom: 28px; }
+        .final-cta .cta-button { margin-bottom: 16px; }
+
+        /* FOOTER */
+        footer { text-align: center; padding: 36px 20px 90px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 16px; }
+        .footer-brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: #e8e8f0; font-weight: 700; font-size: 0.95rem; margin-bottom: 14px; }
+        .footer-brand img { width: 30px; height: 30px; border-radius: 8px; }
+        .footer-links { margin: 14px 0; }
+        .footer-links a { color: #4ECDC4; text-decoration: none; margin: 0 14px; font-size: 0.88rem; transition: color 0.2s ease; }
+        .footer-links a:hover { color: #FFD700; }
+        .copyright { color: #444; font-size: 0.78rem; margin-top: 14px; }
+
+        /* STICKY CTA BAR */
+        .sticky-cta {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(10,10,26,0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(78,205,196,0.15); padding: 10px 16px;
+            transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .sticky-cta.show { transform: translateY(0); }
+        .sticky-inner { display: flex; align-items: center; gap: 12px; max-width: 480px; margin: 0 auto; text-decoration: none; color: #e8e8f0; }
+        .sticky-icon { width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0; }
+        .sticky-text { flex: 1; line-height: 1.3; }
+        .sticky-text strong { display: block; font-size: 0.88rem; }
+        .sticky-text span { font-size: 0.72rem; color: #a0a0b0; }
+        .sticky-btn { background: linear-gradient(135deg, #FFD700, #FFA500); color: #1a1a2e; padding: 8px 22px; border-radius: 40px; font-weight: 800; font-size: 0.82rem; white-space: nowrap; flex-shrink: 0; }
+
+        /* TABLET */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.1rem; }
+            .features-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+            .highlight-grid { grid-template-columns: repeat(2, 1fr); }
+            .skin-card { width: 88px; height: 88px; }
+            .skin-card img { max-width: 56px; max-height: 56px; }
+            .final-cta h2 { font-size: 1.6rem; }
         }
 
-        .skin-card:hover {
-            transform: scale(1.1) rotate(5deg);
-            border-color: #FFD700;
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
-        }
-
-        .skin-card img {
-            max-width: 60px;
-            max-height: 60px;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-        }
-
-        .rarity-tags {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 25px;
-        }
-
-        .rarity-tag {
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-        }
-
-        .rarity-common { background: rgba(150, 150, 150, 0.3); color: #ccc; }
-        .rarity-rare { background: rgba(78, 205, 196, 0.3); color: #4ECDC4; }
-        .rarity-epic { background: rgba(156, 89, 182, 0.3); color: #BB8FCE; }
-        .rarity-legendary { background: rgba(255, 215, 0, 0.3); color: #FFD700; }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 35px 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 50px;
-        }
-
-        footer a {
-            color: #4ECDC4;
-            text-decoration: none;
-            margin: 0 12px;
-            transition: color 0.3s ease;
-        }
-
-        footer a:hover {
-            color: #FFD700;
-        }
-
-        .copyright {
-            margin-top: 20px;
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        /* Mobile */
-        @media (max-width: 600px) {
-            h1 { font-size: 1.8rem; }
-            .tagline { font-size: 1rem; }
-            .subtitle { font-size: 0.9rem; }
-            .app-icon { width: 120px; height: 120px; }
-            .download-hint { font-size: 1rem; padding: 8px 20px; }
-            .store-button img { height: 60px; }
-            .feature-icon-wrapper { width: 60px; height: 60px; }
-            .skin-card { width: 75px; height: 75px; }
-            .skin-card img { max-width: 50px; max-height: 50px; }
-            .banner { border-radius: 15px; }
-            footer a { margin: 0 8px; font-size: 0.9rem; }
-            .highlight-item { padding: 12px 15px; }
+        /* MOBILE */
+        @media (max-width: 480px) {
+            h1 { font-size: 1.7rem; }
+            .tagline { font-size: 0.95rem; }
+            .app-icon { width: 100px; height: 100px; border-radius: 22px; }
+            .cta-button { padding: 14px 32px; font-size: 1.05rem; }
+            .store-badge img { height: 56px; }
+            .highlight-grid { grid-template-columns: 1fr; }
+            .trust-badges { gap: 8px; }
+            .badge { font-size: 0.76rem; padding: 6px 14px; }
+            .skin-card { width: 72px; height: 72px; }
+            .skin-card img { max-width: 48px; max-height: 48px; }
+            .skin-card::after { display: none; }
+            .banner-link { border-radius: 14px; }
+            .sticky-inner { gap: 10px; }
+            .sticky-icon { width: 34px; height: 34px; }
+            .sticky-text strong { font-size: 0.8rem; }
+            .sticky-btn { padding: 7px 18px; font-size: 0.78rem; }
+            footer { padding-bottom: 80px; }
         }
     </style>
 </head>
 <body>
     <div class="stars"></div>
+    <div class="stars-2"></div>
 
     <div class="container">
-        <section class="banner-section">
-            <img src="images/banner.png" alt="Cat Chaos Crash Banner" class="banner">
-        </section>
 
+        <!-- HERO -->
         <section class="hero">
-            <img src="images/Icon%203.png" alt="Cat Chaos Crash" class="app-icon">
-            <h1>Cat Chaos Crash</h1>
-            <p class="tagline">A Cute Offline Cat Runner Game</p>
-            <p class="subtitle">Swipe, dodge, and survive as long as you can!</p>
+            <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="banner-link">
+                <img src="images/banner.png" alt="Cat Chaos Crash Banner">
+            </a>
 
-            <div class="download-section">
-                <div class="download-hint">
-                    <span class="arrow">&#11015;</span>
-                    FREE DOWNLOAD HERE
-                    <span class="arrow">&#11015;</span>
-                </div>
-                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="store-button">
+            <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="icon-link">
+                <img src="images/Icon%203.png" alt="Cat Chaos Crash" class="app-icon">
+            </a>
+
+            <h1>Cat Chaos Crash</h1>
+            <p class="tagline">The Addictive Offline Cat Runner</p>
+            <p class="subtitle">Swipe, dodge, and survive as long as you can</p>
+
+            <div class="cta-group">
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="cta-button">
+                    <span class="cta-icon">&#9658;</span>
+                    Download Free
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="store-badge">
                     <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
                 </a>
             </div>
 
-            <div class="offline-badge">
-                <span class="icon">&#9992;</span>
-                Play Anywhere - No Internet Needed!
+            <div class="trust-badges">
+                <span class="badge"><span class="badge-icon">&#9992;</span> Offline Play</span>
+                <span class="badge"><span class="badge-icon">&#11088;</span> 30+ Skins</span>
+                <span class="badge"><span class="badge-icon">&#127942;</span> Leaderboards</span>
             </div>
         </section>
 
-        <section class="features">
-            <div class="feature">
-                <div class="feature-icon-wrapper">
-                    <img src="images/cat.png" alt="Cat" class="feature-icon">
-                </div>
-                <h3>Easy to Play</h3>
-                <p>Simple one-finger controls. Swipe left and right to dodge obstacles!</p>
-            </div>
+        <div class="divider"></div>
 
-            <div class="feature">
-                <div class="feature-icon-wrapper">
-                    <img src="images/fish.png" alt="Fish Coin" class="feature-icon">
-                </div>
-                <h3>Collect Fish Coins</h3>
-                <p>Grab shiny fish coins and unlock awesome cat skins!</p>
-            </div>
-
-            <div class="feature">
-                <div class="feature-icon-wrapper">
-                    <img src="images/golden_cat.png" alt="Skins" class="feature-icon">
-                </div>
-                <h3>30+ Unique Skins</h3>
-                <p>From pirates to wizards - discover the Diamond Cat and mythical Lotus Cat!</p>
+        <!-- FEATURES -->
+        <section class="features-section reveal">
+            <h2>What Makes It Fun</h2>
+            <div class="features-grid reveal-stagger">
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <img src="images/cat.png" alt="Cat" loading="lazy">
+                    </div>
+                    <h3>Easy to Play</h3>
+                    <p>Simple one-finger controls. Swipe left and right to dodge obstacles!</p>
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <img src="images/fish.png" alt="Fish Coin" loading="lazy">
+                    </div>
+                    <h3>Collect Fish Coins</h3>
+                    <p>Grab shiny fish coins and unlock awesome cat skins!</p>
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <img src="images/golden_cat.png" alt="Skins" loading="lazy">
+                    </div>
+                    <h3>30+ Unique Skins</h3>
+                    <p>From pirates to wizards - discover the Diamond Cat and mythical Lotus Cat!</p>
+                </a>
             </div>
         </section>
 
-        <section class="highlights">
+        <!-- HIGHLIGHTS -->
+        <section class="highlights reveal">
             <h2>Why You'll Love It</h2>
-            <div class="highlight-grid">
-                <div class="highlight-item">
-                    <span class="emoji">&#127873;</span>
-                    <span>Daily login bonuses</span>
-                </div>
-                <div class="highlight-item">
-                    <span class="emoji">&#127922;</span>
-                    <span>Lucky wheel spins</span>
-                </div>
-                <div class="highlight-item">
-                    <span class="emoji">&#127942;</span>
-                    <span>Weekly challenges</span>
-                </div>
-                <div class="highlight-item">
-                    <span class="emoji">&#9729;</span>
-                    <span>Cloud save backup</span>
-                </div>
-                <div class="highlight-item">
-                    <span class="emoji">&#127941;</span>
-                    <span>Global leaderboards</span>
-                </div>
-                <div class="highlight-item">
-                    <span class="emoji">&#128106;</span>
-                    <span>Fun for all ages</span>
-                </div>
+            <div class="highlight-grid reveal-stagger">
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="highlight-item">
+                    <span class="hi-emoji">&#127873;</span>
+                    <span class="hi-text">Daily login bonuses</span>
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="highlight-item">
+                    <span class="hi-emoji">&#127922;</span>
+                    <span class="hi-text">Lucky wheel spins</span>
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="highlight-item">
+                    <span class="hi-emoji">&#127942;</span>
+                    <span class="hi-text">Weekly challenges</span>
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="highlight-item">
+                    <span class="hi-emoji">&#9729;&#65039;</span>
+                    <span class="hi-text">Cloud save backup</span>
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="highlight-item">
+                    <span class="hi-emoji">&#127941;</span>
+                    <span class="hi-text">Global leaderboards</span>
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="highlight-item">
+                    <span class="hi-emoji">&#128106;</span>
+                    <span class="hi-text">Fun for all ages</span>
+                </a>
             </div>
         </section>
 
-        <section class="skins-section">
+        <div class="divider"></div>
+
+        <!-- SKINS -->
+        <section class="skins-section reveal">
             <h2>Unlock Awesome Skins</h2>
             <p class="skins-subtitle">Each cat has its own style and personality!</p>
-            <div class="skins-grid">
-                <div class="skin-card">
-                    <img src="images/wizard_cat.png" alt="Wizard Cat">
-                </div>
-                <div class="skin-card">
-                    <img src="images/cosmos_cat.png" alt="Cosmos Cat">
-                </div>
-                <div class="skin-card">
-                    <img src="images/pirate_cat.png" alt="Pirate Cat">
-                </div>
-                <div class="skin-card">
-                    <img src="images/robo_cat.png" alt="Robo Cat">
-                </div>
-                <div class="skin-card">
-                    <img src="images/ghost_cat.png" alt="Ghost Cat">
-                </div>
-                <div class="skin-card">
-                    <img src="images/golden_cat.png" alt="Golden Cat">
-                </div>
+            <div class="skins-grid reveal-stagger">
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="skin-card" data-rarity="epic" data-name="Wizard Cat">
+                    <img src="images/wizard_cat.png" alt="Wizard Cat" loading="lazy">
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="skin-card" data-rarity="legendary" data-name="Cosmos Cat">
+                    <img src="images/cosmos_cat.png" alt="Cosmos Cat" loading="lazy">
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="skin-card" data-rarity="rare" data-name="Pirate Cat">
+                    <img src="images/pirate_cat.png" alt="Pirate Cat" loading="lazy">
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="skin-card" data-rarity="epic" data-name="Robo Cat">
+                    <img src="images/robo_cat.png" alt="Robo Cat" loading="lazy">
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="skin-card" data-rarity="epic" data-name="Ghost Cat">
+                    <img src="images/ghost_cat.png" alt="Ghost Cat" loading="lazy">
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="skin-card" data-rarity="epic" data-name="Golden Cat">
+                    <img src="images/golden_cat.png" alt="Golden Cat" loading="lazy">
+                </a>
             </div>
             <div class="rarity-tags">
                 <span class="rarity-tag rarity-common">Common</span>
@@ -506,12 +415,59 @@
             </div>
         </section>
 
+        <!-- FINAL CTA -->
+        <section class="final-cta reveal">
+            <h2>Ready to Play?</h2>
+            <p>Join thousands of players. Free, offline, and endlessly fun.</p>
+            <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="cta-button">
+                <span class="cta-icon">&#9658;</span>
+                Get It Now - It's Free
+            </a>
+            <br>
+            <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="store-badge" style="margin-top:8px;">
+                <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
+            </a>
+        </section>
+
+        <!-- FOOTER -->
         <footer>
-            <a href="privacy-policy.html">Privacy Policy</a>
-            <a href="data-deletion.html">Data Deletion</a>
-            <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash">Google Play</a>
+            <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="footer-brand">
+                <img src="images/Icon%203.png" alt="Cat Chaos Crash">
+                <span>Cat Chaos Crash</span>
+            </a>
+            <nav class="footer-links">
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="data-deletion.html">Data Deletion</a>
+                <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash">Google Play</a>
+            </nav>
             <p class="copyright">&copy; 2026 Leonardo Magus. All rights reserved.</p>
         </footer>
+
     </div>
+
+    <!-- STICKY CTA BAR -->
+    <div class="sticky-cta" id="stickyCta">
+        <a href="https://play.google.com/store/apps/details?id=de.leonardomagus.catchaoscrash" class="sticky-inner">
+            <img src="images/Icon%203.png" alt="" class="sticky-icon">
+            <div class="sticky-text">
+                <strong>Cat Chaos Crash</strong>
+                <span>Free on Google Play</span>
+            </div>
+            <span class="sticky-btn">Install</span>
+        </a>
+    </div>
+
+    <script>
+        var ro = new IntersectionObserver(function(e) {
+            e.forEach(function(x) { if (x.isIntersecting) { x.target.classList.add('visible'); ro.unobserve(x.target); } });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el) { ro.observe(el); });
+
+        var sc = document.getElementById('stickyCta');
+        var hr = document.querySelector('.hero');
+        new IntersectionObserver(function(e) {
+            sc.classList.toggle('show', !e[0].isIntersecting);
+        }, { threshold: 0 }).observe(hr);
+    </script>
 </body>
 </html>
